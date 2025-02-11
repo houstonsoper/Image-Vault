@@ -1,0 +1,6 @@
+﻿services:
+  imagevault.api:
+    image: imagevault.api
+    build:
+      context: .
+      dockerfile: imagevault.api/Dockerfile
