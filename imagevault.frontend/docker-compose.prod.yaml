@@ -1,0 +1,10 @@
+﻿version: "3.8"
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      target: prod
+    restart: always
+    ports:
+      - 80:3000
