@@ -1,7 +1,9 @@
 export default function Home() {
   return (
-    <div>
-        <p>dsd</p>
-    </div>
+      <section>
+          <div className="container m-auto">
+              <p>dsddsds</p>
+          </div>
+      </section>
   );
 }

@@ -1,8 +1,8 @@
-﻿services:
-  imagevault.api:
-    image: imagevault.api
-    build:
-      context: .
-      dockerfile: imagevault.api/Dockerfile
-    ports:
-      - "8080:8080"
+﻿#services:
+#  imagevault.api:
+#    image: imagevault.api
+#    build:
+#      context: .
+#      dockerfile: imagevault.api/Dockerfile
+#    ports:
+#      - "8080:8080"

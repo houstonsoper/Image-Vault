@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UserPanelDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration["ConnectionStrings:UserPanelDbContextConnection"]);
+        builder.Configuration["ConnectionStrings:ImageVaultDbContextConnection"]);
 });
 
 builder.Services.AddTransient<IEmailSender,EmailSender>();
@@ -41,7 +41,7 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
-    options.Cookie.Name = "UserPanel.Session";
+    options.Cookie.Name = "User.Session";
     options.IdleTimeout = TimeSpan.FromDays(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
