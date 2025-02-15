@@ -7,7 +7,7 @@ export default function Navbar() {
     const {user} = useUser();
     
     return (
-        <nav className="bg-gray-800">
+        <nav className="bg-gray-900">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -20,7 +20,7 @@ export default function Navbar() {
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
-                                <Link href="#" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                                <Link href="#" className="rounded-md px-3 py-2 text-sm font-medium text-white"
                                    aria-current="page">Home</Link>
                             </div>
                         </div>
