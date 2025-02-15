@@ -5,7 +5,7 @@ import React, {RefObject, useRef, useState} from "react";
 import Image from "next/image";
 
 export default function UploadPage () {
-    const [imagePreview, setImagePreview] = useState<string>("");
+    const [imagePreviewUrl, setImagePreviewUrl] = useState<string>("");
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -14,12 +14,16 @@ export default function UploadPage () {
         console.log(formData.get("title"));
     }
 
-    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file: FileList | null = e.target.files;
-        console.log(e.target.files);
-        if (!file) return;
-
-        setImagePreview(window.URL.createObjectURL(file[0]));
+    const handleImageOnButton = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files: FileList | null = e.target.files;
+        if (files)
+        setImagePreviewUrl(window.URL.createObjectURL(files[0]))
+    }
+    
+    const handleImageOnDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        const files : FileList = (e.dataTransfer.files);
+        setImagePreviewUrl(window.URL.createObjectURL(files[0]));
     }
 
     return (
@@ -52,18 +56,21 @@ export default function UploadPage () {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Image</label>
-                            <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                            <div 
+                                className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6" 
+                                onDrop={handleImageOnDrop} 
+                                onDragOver={(e : React.DragEvent) => e.preventDefault()}>
                                 <div className="space-y-1 text-center">
-                                    {imagePreview ? (
+                                    {imagePreviewUrl ? (
                                         <Image
-                                            src={imagePreview || "/placeholder.svg"}
+                                            src={imagePreviewUrl || "/placeholder.svg"}
                                             alt="Image preview"
                                             width={200}
                                             height={200}
                                             className="mx-auto h-40 w-40 object-cover"
                                         />
                                     ) : (
-                                        <span className="mx-auto h-12 w-12 text-gray-400 material-symbols-outlined text-[3rem]">imagesmode</span>
+                                        <span className="mx-auto text-gray-400 material-symbols-outlined text-[2.5rem]">imagesmode</span>
                                     )}
                                     <div className="flex text-sm text-gray-600">
                                         <label
@@ -76,7 +83,7 @@ export default function UploadPage () {
                                                 name="image"
                                                 type="file"
                                                 className="sr-only"
-                                                onChange={handleImage}
+                                                onChange={handleImageOnButton}
                                                 accept="image/png,image/jpeg"
                                             />
                                         </label>
