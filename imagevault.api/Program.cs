@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<UserPanelDbContext>(options =>
+builder.Services.AddDbContext<ImageVaultDbContext>(options =>
 {
     options.UseSqlServer(
         builder.Configuration["ConnectionStrings:ImageVaultDbContextConnection"]);
@@ -24,6 +24,9 @@ builder.Services.AddScoped<IPasswordTokenService, PasswordTokenService>();
 builder.Services.AddScoped<IPasswordTokenRepository, PasswordTokenRepository>();
 builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+
 
 // Enable CORS
 builder.Services.AddCors(options =>
