@@ -1,18 +1,49 @@
 ﻿"use client"
 
-import React, {useState} from "react";
+import React, {RefObject, useRef, useState} from "react";
 import Image from "next/image";
+import {createPost, uploadImages} from "@/services/postService";
+import Post from "@/interfaces/post";
+import {useUser} from "@/contexts/userContext";
+import {useRouter} from "next/navigation";
+import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export default function UploadPage() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const filesRef : RefObject<FileList | null> = useRef<FileList>(null);
+  const {user} = useUser();
+  const router : AppRouterInstance = useRouter();
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
-    console.log(formData.get("title"));
+    
+    //Extract form data
+    const title : string | undefined = formData.get("title")?.toString();
+    const description : string | undefined= formData.get("description")?.toString();
+    
+    //Validate form data
+    if (!user) {
+      throw new Error("You must be logged in to create a post");
+    }
+    if (!filesRef.current) {
+      throw new Error("No file(s) uploaded");
+    }
+    if (!title || !description) {
+      throw new Error("You must enter a title and description");
+    }
+    
+    //Post form data
+    try {
+      const post: Post | null = await createPost(title, description, user.userId)
+      if (post) {
+        await uploadImages(post.id, filesRef.current);
+        router.push(`/post/${post.id}`);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
-
   const generateImageUrls = (files: FileList) => {
     let urls: string[] = [];
     for (const file of files) {
@@ -27,6 +58,7 @@ export default function UploadPage() {
     if (files) {
       const generatedImageUrls: string[] = generateImageUrls(files);
       setImageUrls(prevUrls => [...prevUrls, ...generatedImageUrls]);
+      filesRef.current = files;
     }
   }
 
@@ -37,9 +69,10 @@ export default function UploadPage() {
     if (files) {
       const generatedImageUrls: string[] = generateImageUrls(files);
       setImageUrls(prevUrls => [...prevUrls, ...generatedImageUrls]);
+      filesRef.current = files;
     }
   }
-
+  
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex min-h-screen items-center justify-center">
