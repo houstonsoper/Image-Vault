@@ -6,9 +6,9 @@ namespace imagevault.api.Repositories;
 
 public class UserGroupRepository : IUserGroupRepository
 {
-    private readonly UserPanelDbContext _context;
+    private readonly ImageVaultDbContext _context;
 
-    public UserGroupRepository(UserPanelDbContext context)
+    public UserGroupRepository(ImageVaultDbContext context)
     {
         _context = context;
     }

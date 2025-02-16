@@ -11,7 +11,7 @@ using imagevault.api.Contexts;
 
 namespace imagevault.api.Migrations
 {
-    [DbContext(typeof(UserPanelDbContext))]
+    [DbContext(typeof(ImageVaultDbContext))]
     [Migration("20250212155319_Init")]
     partial class Init
     {

@@ -4,11 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace imagevault.api.Contexts;
 
-public class UserPanelDbContext : DbContext
+public class ImageVaultDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
     public DbSet<UserGroup> UserGroups { get; set; }
+    public DbSet<Image> Images { get; set; }
+    public DbSet<Post> Posts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,7 +25,7 @@ public class UserPanelDbContext : DbContext
         modelBuilder.ApplyConfiguration(new PasswordResetTokenEntityTypeConfiguration());
     }
 
-    public UserPanelDbContext(DbContextOptions<UserPanelDbContext> options) : base(options)
+    public ImageVaultDbContext(DbContextOptions<ImageVaultDbContext> options) : base(options)
     {
         
     }

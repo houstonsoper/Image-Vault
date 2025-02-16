@@ -10,7 +10,7 @@ using imagevault.api.Contexts;
 
 namespace imagevault.api.Migrations
 {
-    [DbContext(typeof(UserPanelDbContext))]
+    [DbContext(typeof(ImageVaultDbContext))]
     partial class UserPanelDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

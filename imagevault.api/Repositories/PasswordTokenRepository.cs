@@ -6,9 +6,9 @@ namespace imagevault.api.Repositories;
 
 public class PasswordTokenRepository : IPasswordTokenRepository
 {
-    private readonly UserPanelDbContext _context;
+    private readonly ImageVaultDbContext _context;
 
-    public PasswordTokenRepository(UserPanelDbContext context)
+    public PasswordTokenRepository(ImageVaultDbContext context)
     {
         _context = context;
     }
