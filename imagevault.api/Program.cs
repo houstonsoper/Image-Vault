@@ -23,6 +23,7 @@ builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
 builder.Services.AddScoped<IPasswordTokenService, PasswordTokenService>();
 builder.Services.AddScoped<IPasswordTokenRepository, PasswordTokenRepository>();
 builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 // Enable CORS
 builder.Services.AddCors(options =>
