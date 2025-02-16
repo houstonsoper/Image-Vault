@@ -13,5 +13,5 @@ public class CreatePostDto
 	public required string Description { get; set; } 
 	
 	[Required (ErrorMessage ="Please enter a User Id")]
-	public required string UserId { get; set; }
+	public required Guid UserId { get; set; }
 }

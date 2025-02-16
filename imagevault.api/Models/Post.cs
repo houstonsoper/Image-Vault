@@ -19,7 +19,7 @@ public class Post
 	public bool IsActive { get; set; } = true;
 	
 	[Required (ErrorMessage ="Please enter a User Id")]
-	public required string UserId { get; set; }
+	public Guid UserId { get; set; }
 	
 	//Navigation
 	public User? User { get; set; }
