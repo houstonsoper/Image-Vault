@@ -5,14 +5,14 @@ namespace imagevault.api.Models;
 
 public class Image
 {
-	public Guid Id { get; set; } = Guid.NewGuid();
-	public DateTime UploadTime { get; set; } = DateTime.Now;
-	public Guid PostId { get; set; } = Guid.NewGuid();
-	public bool IsDeleted { get; set; } = false;
+	public Guid Id { get; set; }
+	public DateTime UploadTime { get; set; } 
+	public Guid PostId { get; set; } 
+	public bool IsDeleted { get; set; }
 	
 	//Navigation
 	[NotMapped]
-	public required IFormFile ImageFile { get; set; }
+	public IFormFile? ImageFile { get; set; }
 	
 	public Post? Post { get; set; }
 }

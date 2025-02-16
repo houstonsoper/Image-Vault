@@ -2,7 +2,7 @@
 
 namespace imagevault.api.DTOs;
 
-public class CreatePostDto
+public class PostDto
 {
 	[Required (ErrorMessage=("Title is required"))]
 	[StringLength(100, ErrorMessage ="Title must be between 5 and 100 characters", MinimumLength = 5)]

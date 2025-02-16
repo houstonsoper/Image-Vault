@@ -4,6 +4,5 @@ namespace imagevault.api.Services;
 
 public interface IImageService
 {
-	Task UploadImagesAsync (IEnumerable<Image> images);
-	Task UploadImageAsync (Image image);
+	Task UploadImageAsync (Image image, Guid postId);
 }

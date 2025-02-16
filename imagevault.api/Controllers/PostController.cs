@@ -11,18 +11,33 @@ namespace imagevault.api.Controllers;
 public class PostController : ControllerBase
 {
 	private readonly IImageService _imageService;
-	private readonly IPostRepository _postRepository;
+	private readonly IPostService _postService;
 
-	public PostController(IImageService imageService, PostRepository postRepository)
+	public PostController(IImageService imageService, IPostService postService)
 	{
 		_imageService = imageService;
-		_postRepository = postRepository;
+		_postService = postService;
 	}
 	
 	[HttpPost("create")]
-	public async Task<IActionResult> CreatePost(CreatePostDto createPostDto)
+	public async Task<IActionResult> CreatePost([FromBody] PostDto postDto)
 	{
-		await _postRepository.CreatePostAsync(createPostDto.ToPostFromCreatePostDto());
-		return Ok("Post created");
+		var post = postDto.ToPostFromCreatePostDto();
+		await _postService.CreatePostAsync(post);
+		
+		return Ok(post.ToPostRequestDto());
+	}
+	
+	[HttpPost ("{postId}/images/upload")]
+	public async Task<IActionResult> UploadImage([FromForm] UploadImageDto image, [FromRoute] Guid postId)
+	{
+		if (!ModelState.IsValid)
+		{
+			return BadRequest(ModelState);
+		}
+		
+		await _imageService.UploadImageAsync(image.ToImageFromUploadImageDto(), postId);
+		
+		return Ok("Image uploaded");
 	}
 }

@@ -9,7 +9,8 @@ public static class ImageExtension
 	{
 		return new Image
 		{
-			Id = default,
+			Id = Guid.NewGuid(),
+			UploadTime = DateTime.UtcNow,
 			ImageFile = dto.ImageFile
 		};
 	}
