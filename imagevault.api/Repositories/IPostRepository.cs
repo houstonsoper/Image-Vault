@@ -6,4 +6,5 @@ namespace imagevault.api.Repositories;
 public interface IPostRepository
 {
 	Task CreatePostAsync (Post post);
+	Task <Post?> GetPostByIdAsync (Guid postId);
 }

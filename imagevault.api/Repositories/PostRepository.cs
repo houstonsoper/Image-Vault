@@ -17,4 +17,9 @@ public class PostRepository : IPostRepository
 		await _dbContext.Posts.AddAsync(post);
 		await _dbContext.SaveChangesAsync();
 	}
+
+	public async Task<Post?> GetPostByIdAsync(Guid postId)
+	{
+		return await _dbContext.Posts.FindAsync(postId);
+	}
 }
