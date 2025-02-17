@@ -6,10 +6,12 @@ namespace imagevault.api.Services;
 public class ImageService : IImageService
 {
 	private readonly IImageRepository _imageRepository;
+	private readonly IPostRepository _postRepository;
 	
-	public ImageService(IImageRepository imageRepository)
+	public ImageService(IImageRepository imageRepository, IPostRepository postRepository)
 	{
 		_imageRepository = imageRepository;
+		_postRepository = postRepository;
 	}
 	
 	public async Task UploadImageAsync(Image image, Guid postId)
@@ -45,5 +47,19 @@ public class ImageService : IImageService
 		{
 			throw new IOException($"Unable to add {image.ImageFile.FileName} to database");
 		}
+	}
+
+	public async Task<List<Image>> GetImagesByPostIdAsync(Guid postId)
+	{
+		var post = await _postRepository.GetPostByIdAsync(postId)
+			?? throw new KeyNotFoundException("No post was found");
+
+		var images = await _imageRepository.GetImagesByPostIdAsync(post.Id);
+		var imageList = images.ToList();
+		
+		if (imageList.Count == 0)
+			throw new InvalidOperationException("No images were found for this post");
+
+		return imageList;
 	}
 }
