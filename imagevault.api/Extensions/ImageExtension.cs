@@ -14,4 +14,14 @@ public static class ImageExtension
 			ImageFile = dto.ImageFile
 		};
 	}
+
+	public static ImageRequestDto ToImageRequestDto(this Image dto)
+	{
+		return new ImageRequestDto
+		{
+			Id = dto.Id,
+			UploadTime = dto.UploadTime,
+			IsDeleted = dto.IsDeleted
+		};
+	}
 }
