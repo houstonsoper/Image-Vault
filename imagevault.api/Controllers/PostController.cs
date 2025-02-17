@@ -41,7 +41,7 @@ public class PostController : ControllerBase
 			return BadRequest(ModelState);
 		}
 		
-		await _imageService.UploadImageAsync(imagePost.ToImageFromUploadImageDto(), postId);
+		await _imageService.UploadImageAsync(imagePost.ToImage(), postId);
 		
 		return Ok("Image uploaded");
 	}

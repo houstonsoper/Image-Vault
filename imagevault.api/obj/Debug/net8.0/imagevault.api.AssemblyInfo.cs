@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("imagevault.api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5d0a11b28ad243fde4476d1c7eedb9f2116a102")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+77c89c1ce90b47c3673be1de2470b71015e3344b")]
 [assembly: System.Reflection.AssemblyProductAttribute("imagevault.api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("imagevault.api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

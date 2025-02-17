@@ -31,7 +31,11 @@ namespace imagevault.api.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("PostId")
+                    b.Property<string>("Path")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid?>("PostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UploadTime")
@@ -173,10 +177,8 @@ namespace imagevault.api.Migrations
             modelBuilder.Entity("imagevault.api.Models.Image", b =>
                 {
                     b.HasOne("imagevault.api.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Images")
+                        .HasForeignKey("PostId");
 
                     b.Navigation("Post");
                 });
@@ -212,6 +214,11 @@ namespace imagevault.api.Migrations
                         .IsRequired();
 
                     b.Navigation("UserGroup");
+                });
+
+            modelBuilder.Entity("imagevault.api.Models.Post", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

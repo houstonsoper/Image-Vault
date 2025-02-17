@@ -5,12 +5,11 @@ namespace imagevault.api.Extensions;
 
 public static class ImageExtension
 {
-	public static Image ToImageFromUploadImageDto(this ImagePostDto postDto)
+	public static Image ToImage(this ImagePostDto postDto)
 	{
 		return new Image
 		{
-			Id = Guid.NewGuid(),
-			UploadTime = DateTime.UtcNow,
+			ImageFile = postDto.ImageFile,
 		};
 	}
 
@@ -20,7 +19,8 @@ public static class ImageExtension
 		{
 			Id = dto.Id,
 			UploadTime = dto.UploadTime,
-			IsDeleted = dto.IsDeleted
+			IsDeleted = dto.IsDeleted,
+			Path = dto.Path ?? "No path found",
 		};
 	}
 }

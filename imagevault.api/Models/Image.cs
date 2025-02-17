@@ -5,14 +5,17 @@ namespace imagevault.api.Models;
 
 public class Image
 {
-	public Guid Id { get; set; }
-	public DateTime UploadTime { get; set; } 
-	public Guid PostId { get; set; } 
+	public Guid Id { get; set; } = Guid.NewGuid();
+	public DateTime UploadTime { get; set; } = DateTime.UtcNow;
+	public Guid? PostId { get; set; }
 	public bool IsDeleted { get; set; }
 	
-	//Navigation
-	public Post? Post { get; set; }
+	[StringLength(500, ErrorMessage = "Image path exceeds 500 characters.")]
+	public string? Path { get; set; }
 	
 	[NotMapped]
 	public IFormFile? ImageFile { get; set; }
+	
+	//Navigation
+	public Post? Post { get; set; }
 }
