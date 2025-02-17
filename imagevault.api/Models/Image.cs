@@ -11,7 +11,6 @@ public class Image
 	public bool IsDeleted { get; set; }
 	
 	[StringLength(500, ErrorMessage = "Image path exceeds 500 characters.")]
-	public string? Path { get; set; }
 	
 	[NotMapped]
 	public IFormFile? ImageFile { get; set; }

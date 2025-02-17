@@ -68,6 +68,7 @@ app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseSession();
 app.UseRouting();
+app.UseStaticFiles();
 app.MapControllers();
 
 

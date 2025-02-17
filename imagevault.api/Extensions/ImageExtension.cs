@@ -20,7 +20,6 @@ public static class ImageExtension
 			Id = dto.Id,
 			UploadTime = dto.UploadTime,
 			IsDeleted = dto.IsDeleted,
-			Path = dto.Path ?? "No path found",
 		};
 	}
 }

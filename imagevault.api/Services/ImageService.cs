@@ -13,11 +13,9 @@ public class ImageService : IImageService
 		_imageRepository = imageRepository;
 		_postRepository = postRepository;
 	}
-
 	public async Task UploadImageAsync(Image image, Guid postId)
 	{
 		//Upload to file area
-		string path;
 		try
 		{
 			if (image.ImageFile == null)
@@ -31,7 +29,7 @@ public class ImageService : IImageService
 				throw new FormatException("Invalid file extension, only jpg, jpeg, and .png format are supported");
 
 			//Upload the image to file
-			path = Path.Combine(@"C:\Users\houst\RiderProjects\Image Vault\imagevault.api\Images", image.Id.ToString() + fileExtension);
+			var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", image.Id.ToString() + fileExtension);
 			await using var stream = new FileStream(path, FileMode.Create);
 			await image.ImageFile.CopyToAsync(stream);
 		}
@@ -49,7 +47,6 @@ public class ImageService : IImageService
 				UploadTime = image.UploadTime,
 				PostId = postId,
 				IsDeleted = image.IsDeleted,
-				Path = path
 			};
 			await _imageRepository.AddImagesAsync(newImage);
 		}
