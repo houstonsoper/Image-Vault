@@ -20,6 +20,7 @@ public static class ImageExtension
 			Id = dto.Id,
 			UploadTime = dto.UploadTime,
 			IsDeleted = dto.IsDeleted,
+			Extension = dto.Extension,
 		};
 	}
 }

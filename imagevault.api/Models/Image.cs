@@ -10,6 +10,9 @@ public class Image
 	public Guid? PostId { get; set; }
 	public bool IsDeleted { get; set; }
 	
+	[StringLength(10)]
+	public string? Extension { get; set; }
+	
 	[StringLength(500, ErrorMessage = "Image path exceeds 500 characters.")]
 	
 	[NotMapped]

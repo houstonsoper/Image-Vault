@@ -47,6 +47,7 @@ public class ImageService : IImageService
 				UploadTime = image.UploadTime,
 				PostId = postId,
 				IsDeleted = image.IsDeleted,
+				Extension = Path.GetExtension(image.ImageFile.FileName).ToLower()
 			};
 			await _imageRepository.AddImagesAsync(newImage);
 		}
