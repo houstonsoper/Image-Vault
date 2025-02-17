@@ -22,6 +22,11 @@ public class PostController : ControllerBase
 	[HttpPost("create")]
 	public async Task<IActionResult> CreatePost([FromBody] PostDto postDto)
 	{
+		if (!ModelState.IsValid)
+		{
+			return BadRequest(ModelState);
+		}
+		
 		var post = postDto.ToPostFromCreatePostDto();
 		await _postService.CreatePostAsync(post);
 		
@@ -39,5 +44,13 @@ public class PostController : ControllerBase
 		await _imageService.UploadImageAsync(image.ToImageFromUploadImageDto(), postId);
 		
 		return Ok("Image uploaded");
+	}
+	
+	[HttpGet ("{postId}/images")]
+	public async Task<IActionResult> GetImagesByPostId([FromRoute] Guid postId)
+	{
+		var images = await _imageService.GetImagesByPostIdAsync(postId);
+		var imagesDto = images.Select(i => i.ToImageRequestDto());
+		return Ok(imagesDto);
 	}
 }
