@@ -1,9 +1,13 @@
 ﻿import Post from "@/interfaces/post";
+import FetchPostsParams from "@/interfaces/fetchPostsParams";
+import PostWithImages from "@/interfaces/postWithImages";
 
 const DEFAULT_URL = "https://localhost:44367/Post"
+const FILE_PATH: string = "C:/Users/houst/RiderProjects/Image Vault/imagevault.api/Images";
 
 export async function createPost(title : string, description : string, userId : string) : Promise<Post |null> {
   try{
+    
     const url : string = DEFAULT_URL + "/create"
     
     const response : Response = await fetch(url, {
@@ -24,7 +28,7 @@ export async function createPost(title : string, description : string, userId : 
 }
 
 export async function uploadImages(postId : string, imageFiles : FileList){
-  debugger;
+  
   const url : string = `${DEFAULT_URL}/${postId}/images/upload`
 
   const uploads = Array.from(imageFiles).map(async file => {
@@ -44,4 +48,22 @@ export async function uploadImages(postId : string, imageFiles : FileList){
     }
   });
   await Promise.allSettled(uploads);
+}
+
+export async function fetchPosts ({limit = 0, offset = 0, search = ""} : FetchPostsParams, signal? : AbortSignal) : Promise<PostWithImages[]> {
+  
+  const url : string = `${DEFAULT_URL}/search?limit=${limit}&offset=${offset}&search=${search}`;
+  
+  try {
+    const response : Response = await fetch(url, {signal});
+    
+    if (!response.ok)
+      throw new Error("Failed to fetch posts");
+    
+    return await response.json();
+    
+  } catch (e){
+    console.error(e);
+    return [];
+  }
 }
