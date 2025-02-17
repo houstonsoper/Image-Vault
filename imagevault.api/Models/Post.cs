@@ -23,5 +23,5 @@ public class Post
 	
 	//Navigation
 	public User? User { get; set; }
-	public IEnumerable<Image> Images { get; set; } = [];
+	public ICollection<Image> Images { get; set; } = [];
 }

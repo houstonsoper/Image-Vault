@@ -1,6 +1,6 @@
 ﻿namespace imagevault.api.DTOs;
 
-public class UploadImageDto
+public class ImagePostDto
 {
 	public required IFormFile ImageFile { get; set; }
 }

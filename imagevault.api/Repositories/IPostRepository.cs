@@ -7,4 +7,5 @@ public interface IPostRepository
 {
 	Task CreatePostAsync (Post post);
 	Task <Post?> GetPostByIdAsync (Guid postId);
+	IQueryable<Post> GetPostsQuery();
 }

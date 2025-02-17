@@ -34,14 +34,14 @@ public class PostController : ControllerBase
 	}
 	
 	[HttpPost ("{postId}/images/upload")]
-	public async Task<IActionResult> UploadImage([FromForm] UploadImageDto image, [FromRoute] Guid postId)
+	public async Task<IActionResult> UploadImage([FromForm] ImagePostDto imagePost, [FromRoute] Guid postId)
 	{
 		if (!ModelState.IsValid)
 		{
 			return BadRequest(ModelState);
 		}
 		
-		await _imageService.UploadImageAsync(image.ToImageFromUploadImageDto(), postId);
+		await _imageService.UploadImageAsync(imagePost.ToImageFromUploadImageDto(), postId);
 		
 		return Ok("Image uploaded");
 	}
@@ -52,5 +52,13 @@ public class PostController : ControllerBase
 		var images = await _imageService.GetImagesByPostIdAsync(postId);
 		var imagesDto = images.Select(i => i.ToImageRequestDto());
 		return Ok(imagesDto);
+	}
+
+	[HttpGet("search")]
+	public async Task<IActionResult> GetImages([FromQuery] int? limit, [FromQuery] int? offset, [FromQuery] string? search)
+	{
+		var posts = await _postService.GetPostsAsync(limit, offset, search);
+		var postsDto = posts.Select(p => p.ToPostRequestWithImagesDto());
+		return Ok(postsDto);
 	}
 }

@@ -11,8 +11,8 @@ public class Image
 	public bool IsDeleted { get; set; }
 	
 	//Navigation
+	public Post? Post { get; set; }
+	
 	[NotMapped]
 	public IFormFile? ImageFile { get; set; }
-	
-	public Post? Post { get; set; }
 }

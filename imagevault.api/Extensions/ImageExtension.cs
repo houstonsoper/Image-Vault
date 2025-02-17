@@ -5,13 +5,12 @@ namespace imagevault.api.Extensions;
 
 public static class ImageExtension
 {
-	public static Image ToImageFromUploadImageDto(this UploadImageDto dto)
+	public static Image ToImageFromUploadImageDto(this ImagePostDto postDto)
 	{
 		return new Image
 		{
 			Id = Guid.NewGuid(),
 			UploadTime = DateTime.UtcNow,
-			ImageFile = dto.ImageFile
 		};
 	}
 

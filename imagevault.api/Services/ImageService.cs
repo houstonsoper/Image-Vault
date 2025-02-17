@@ -19,12 +19,19 @@ public class ImageService : IImageService
 		//Upload to file area
 		try
 		{
-			var path = Path.Combine(@"C:\Users\houst\RiderProjects\Image Vault\imagevault.api\Images", image.Id.ToString());
-			await using var stream = new FileStream(path, FileMode.Create);
-
 			if (image.ImageFile == null)
 				throw new FileNotFoundException("Image file was not found");
 			
+			//Check if the file is an accepted image type
+			var fileExtension = Path.GetExtension(image.ImageFile.FileName).ToLower();
+			var allowedExtensions = new[] { ".jpg", ".jpeg", ".png"};
+			
+			if (!allowedExtensions.Contains(fileExtension))
+				throw new FormatException("Invalid file extension, only jpg, jpeg, and .png format are supported");
+			
+			//Upload the image to file
+			var path = Path.Combine(@"C:\Users\houst\RiderProjects\Image Vault\imagevault.api\Images", image.Id.ToString() + fileExtension);
+			await using var stream = new FileStream(path, FileMode.Create);
 			await image.ImageFile.CopyToAsync(stream);
 		}
 		catch (Exception e)

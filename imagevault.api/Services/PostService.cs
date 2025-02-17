@@ -1,6 +1,7 @@
 ﻿using imagevault.api.Contexts;
 using imagevault.api.Models;
 using imagevault.api.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace imagevault.api.Services;
 
@@ -30,5 +31,20 @@ public class PostService : IPostService
 		{
 			throw new Exception ("An error occured while creating a post");
 		}
+	}
+	public Task<List<Post>> GetPostsAsync(int? limit, int? offset, string? search)
+	{
+		var query = _postRepository.GetPostsQuery();
+		
+		if(offset.HasValue && offset != 0)
+			query = query.Skip(offset.Value);
+		
+		if (limit.HasValue && limit.Value != 0)
+			query = query.Take(limit.Value);
+
+		if (!string.IsNullOrEmpty(search))
+			query = query.Where(p => p.Title.ToLower().Contains(search.ToLower()));
+
+		return query.ToListAsync();
 	}
 }

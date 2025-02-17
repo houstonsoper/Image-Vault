@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using imagevault.api.Models;
 
 namespace imagevault.api.DTOs;
 
-public class PostRequestDto
+public class PostRequestWithImagesDto
 {
 	public Guid Id { get; set; }
 	public string Title { get; set; } = string.Empty;
@@ -10,4 +10,5 @@ public class PostRequestDto
 	public DateTime Date { get; set; }
 	public bool IsActive { get; set; }
 	public Guid UserId { get; set; }
+	public IEnumerable<ImageRequestDto> Images { get; set; } = [];
 }

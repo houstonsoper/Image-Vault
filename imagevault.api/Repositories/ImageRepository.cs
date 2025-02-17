@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace imagevault.api.Repositories;
 
-public class ImageRepository : IImageRepository
+public class ImageRepository : IImageRepository 
 {
 	private readonly ImageVaultDbContext _dbContext;
 
