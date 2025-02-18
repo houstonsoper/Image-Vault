@@ -1,4 +1,4 @@
-﻿import Image from "@/interfaces/image";
+﻿import PostImage from "@/interfaces/postImage";
 
 export default interface PostWithImages {
   id: string,
@@ -7,5 +7,5 @@ export default interface PostWithImages {
   date: Date,
   isActive : boolean,
   userId : string,
-  images : Image[],
+  images : PostImage[],
 }
