@@ -2,7 +2,8 @@
 
 import type PostWithImages from "@/interfaces/postWithImages"
 import Image from "next/image"
-import {useState} from "react"
+import React, {useState} from "react"
+import Link from "next/link";
 
 interface PostCardProps {
   post: PostWithImages
@@ -20,7 +21,7 @@ export default function PostCard({ post }: PostCardProps) {
   }
   
   return (
-    <div className="mb-10">
+    <Link href={`post/${post.id}`} className="mb-10">
       <div className="bg-neutral-800 hover:bg-neutral-700 hover:scale-105 transition-all duration-200 hover:cursor-pointer text-white rounded-lg overflow-hidden shadow-lg group">
         <div className="relative aspect-square">
           <Image
@@ -33,14 +34,22 @@ export default function PostCard({ post }: PostCardProps) {
           {post.images.length > 1 && (
           <div className="flex relative justify-between items-center h-full px-1 opacity-0 group-hover:opacity-100 transition duration-200">
             <button 
-              className="material-symbols-outlined bg-gray-800 p-1 hover:bg-gray-700 rounded hover:scale-105" 
-              onClick={() => handleImageChange("prev")}
+              className="material-symbols-outlined bg-gray-800 p-1 hover:bg-gray-700 rounded hover:scale-105"
+              onClick={(e : React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                handleImageChange("prev");
+              }
+            }
             >
               <span>chevron_left</span>
             </button>
             <button 
               className="material-symbols-outlined bg-gray-800 p-1 hover:bg-gray-700 rounded hover:scale-105" 
-              onClick={() => handleImageChange("next")}
+              onClick={(e : React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                handleImageChange("next");
+              }
+            }
             >
               <span className="relative left-[0.14rem]">chevron_right</span>
             </button>
@@ -62,7 +71,7 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
