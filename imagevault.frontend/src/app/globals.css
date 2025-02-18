@@ -40,3 +40,7 @@ body {
 .symbol-hover:hover {
   font-variation-settings: 'FILL' 1;
 }
+
+.symbol-fill {
+    font-variation-settings: 'FILL' 1;
+}
