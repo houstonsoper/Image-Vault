@@ -6,4 +6,5 @@ public interface IPostService
 {
 	Task CreatePostAsync(Post post);
 	Task<List<Post>> GetPostsAsync(int? limit, int? offset, string? search);
+	Task <Post> GetPostByIdAsync(Guid id);
 }

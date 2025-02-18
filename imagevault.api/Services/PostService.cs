@@ -47,4 +47,10 @@ public class PostService : IPostService
 
 		return query.ToListAsync();
 	}
+
+	public async Task<Post> GetPostByIdAsync(Guid id)
+	{
+		return await _postRepository.GetPostByIdAsync(id)
+			?? throw new KeyNotFoundException ("Post not found");
+	}
 }
