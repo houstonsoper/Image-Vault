@@ -21,8 +21,11 @@ public class PostRepository : IPostRepository
 
 	public async Task<Post?> GetPostByIdAsync(Guid postId)
 	{
-		return await _dbContext.Posts.FindAsync(postId);
+		return await _dbContext.Posts
+			.Include(p => p.Images)
+			.FirstOrDefaultAsync(p => p.Id == postId);
 	}
+	
 	public IQueryable<Post> GetPostsQuery()
 	{
 		return _dbContext.Posts

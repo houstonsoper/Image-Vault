@@ -61,4 +61,11 @@ public class PostController : ControllerBase
 		var postsDto = posts.Select(p => p.ToPostRequestWithImagesDto());
 		return Ok(postsDto);
 	}
+
+	[HttpGet("{postId}")]
+	public async Task<IActionResult> GetPostByIdAsync(Guid postId)
+	{
+		var post = await _postService.GetPostByIdAsync(postId);
+		return Ok(post.ToPostRequestWithImagesDto());
+	}
 }
