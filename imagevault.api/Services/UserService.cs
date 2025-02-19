@@ -107,7 +107,7 @@ public class UserService : IUserService
             query = query
                 .Where(u => 
                     u.Email.ToLower().Contains(search.ToLower()) || 
-                    u.Username.ToLower().Contains(search.ToLower())
+                    u.Username.ToLower().Contains(search.ToLower()) 
                     );
         }
         

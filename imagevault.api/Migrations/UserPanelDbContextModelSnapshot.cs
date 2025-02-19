@@ -45,7 +45,7 @@ namespace imagevault.api.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("imagevault.api.Models.PasswordResetToken", b =>
@@ -70,7 +70,7 @@ namespace imagevault.api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PasswordResetTokens");
+                    b.ToTable("PasswordResetTokens", (string)null);
                 });
 
             modelBuilder.Entity("imagevault.api.Models.Post", b =>
@@ -102,7 +102,7 @@ namespace imagevault.api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("imagevault.api.Models.User", b =>
@@ -119,29 +119,24 @@ namespace imagevault.api.Migrations
                         .HasMaxLength(254)
                         .HasColumnType("nvarchar(254)");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Surname")
+                    b.Property<int>("UserGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("UserGroupId")
-                        .HasColumnType("int");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("UserGroupId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("imagevault.api.Models.UserGroup", b =>
@@ -159,7 +154,7 @@ namespace imagevault.api.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.ToTable("UserGroups");
+                    b.ToTable("UserGroups", (string)null);
 
                     b.HasData(
                         new

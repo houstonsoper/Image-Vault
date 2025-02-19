@@ -4,39 +4,32 @@ import UserFormDetails from "@/interfaces/userFormDetails";
 const BASEURL: string = "https://localhost:44367/User"
 
 export function extractFormDate(form: FormData): UserFormDetails{
-    const forename: string | undefined = form.get('forename')?.toString();
-    const surname: string | undefined = form.get('surname')?.toString();
+    const username: string | undefined = form.get('username')?.toString();
     const email: string | undefined = form.get('email')?.toString();
     const password: string | undefined = form.get('password')?.toString();
     const confirmPassword: string | undefined = form.get('confirmPassword')?.toString();
 
-    return {forename, surname, email, password, confirmPassword} as UserFormDetails;
+    return {username, email, password, confirmPassword} as UserFormDetails;
 }
 
 export function validateRegistrationForm(formData: FormData): Error[] | null {
     const details: UserFormDetails = extractFormDate(formData);
     let errors: Error[] = [];
 
-    //Check if forename is supplied and is between 1 and 20 characters
-    if (!details.forename) {
-        errors.push({name: "InvalidForename", message: "Please enter your first name"});
-    } else if (details.forename.length < 5 || details.forename.length > 20) {
-        errors.push({name: "InvalidForenameLength", message: "First name must be between 1 and 20 characters"});
+    //Check if username is supplied and is between 5 and 20 characters
+    if (!details.username) {
+        errors.push({name: "InvalidEmail", message: "Please enter your email"});
+    } else if (details.username.length < 5 || details.username.length > 20) {
+        errors.push({name: "InvalidUsernameLength", message: "Username must be between 5 and 20 characters"});
     }
-
-    //Check if surname is supplied as is between 1 and 20 characters
-    if (!details.surname) {
-        errors.push({name: "InvalidSurname", message: "Please enter your surname"});
-    } else if (details.surname.length < 5 || details.surname.length > 20) {
-        errors.push({name: "InvalidSurnameLength", message: "Surname must be between 1 and 20 characters"});
-    }
-
+    
     //Check if email is supplied and is between 5 and 254 characters
     if (!details.email) {
         errors.push({name: "InvalidEmail", message: "Please enter your email"});
     } else if (details.email.length < 5 || details.email.length > 254) {
         errors.push({name: "InvalidEmailLength", message: "Email must be between 5 and 254 characters"});
     }
+    
     //Check that passwords match 
     //and that the password is between 5 and 15 characters
     if (!details.password && !details.confirmPassword) {
@@ -63,7 +56,7 @@ export function validateLoginForm(formData: FormData): Error[] | null {
     if (!details.email) {
         errors.push({name: "InvalidEmail", message: "Please enter your email"});
     }
-
+    
     //Check if a password has been entered
     if (!details.password) {
         errors.push({name: "InvalidPassword", message: "Please enter your password"});

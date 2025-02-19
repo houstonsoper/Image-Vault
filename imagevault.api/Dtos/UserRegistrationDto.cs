@@ -5,7 +5,7 @@ namespace imagevault.api.DTOs;
 public class UserRegistrationDto
 {
     [Required (ErrorMessage = "Username is required")]
-    [StringLength(20, ErrorMessage = "Username must be between 1 and 20 characters", MinimumLength = 1)]
+    [StringLength(20, ErrorMessage = "Username must be between 5 and 20 characters", MinimumLength = 5)]
     public required string Username { get; set; }
     
     [Required (ErrorMessage = "Email is required")]
