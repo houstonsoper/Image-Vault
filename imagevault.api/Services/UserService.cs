@@ -35,8 +35,7 @@ public class UserService : IUserService
         // Create and save the user
         var user = new User
         {
-            Forename = userDto.Forename,
-            Surname = userDto.Surname,
+            Username = userDto.Username,
             Email = userDto.Email,
             Password = hashedPassword,
         };
@@ -108,8 +107,7 @@ public class UserService : IUserService
             query = query
                 .Where(u => 
                     u.Email.ToLower().Contains(search.ToLower()) || 
-                    u.Forename.ToLower().Contains(search.ToLower()) || 
-                    u.Surname.ToLower().Contains(search.ToLower())
+                    u.Username.ToLower().Contains(search.ToLower())
                     );
         }
         
