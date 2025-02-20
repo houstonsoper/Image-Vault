@@ -11,6 +11,8 @@ public class ImageVaultDbContext : DbContext
     public DbSet<UserGroup> UserGroups { get; set; }
     public DbSet<Image> Images { get; set; }
     public DbSet<Post> Posts { get; set; }
+    
+    public DbSet<Like> Likes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,6 +25,7 @@ public class ImageVaultDbContext : DbContext
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserGroupEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new PasswordResetTokenEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new LikeEntityTypeConfiguration());
     }
 
     public ImageVaultDbContext(DbContextOptions<ImageVaultDbContext> options) : base(options)

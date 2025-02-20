@@ -45,7 +45,31 @@ namespace imagevault.api.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("imagevault.api.Models.Like", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("imagevault.api.Models.PasswordResetToken", b =>
@@ -70,7 +94,7 @@ namespace imagevault.api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PasswordResetTokens", (string)null);
+                    b.ToTable("PasswordResetTokens");
                 });
 
             modelBuilder.Entity("imagevault.api.Models.Post", b =>
@@ -102,7 +126,7 @@ namespace imagevault.api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("imagevault.api.Models.User", b =>
@@ -136,7 +160,7 @@ namespace imagevault.api.Migrations
 
                     b.HasIndex("UserGroupId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("imagevault.api.Models.UserGroup", b =>
@@ -154,7 +178,7 @@ namespace imagevault.api.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.ToTable("UserGroups", (string)null);
+                    b.ToTable("UserGroups");
 
                     b.HasData(
                         new
@@ -176,6 +200,25 @@ namespace imagevault.api.Migrations
                         .HasForeignKey("PostId");
 
                     b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("imagevault.api.Models.Like", b =>
+                {
+                    b.HasOne("imagevault.api.Models.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("imagevault.api.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("imagevault.api.Models.PasswordResetToken", b =>
