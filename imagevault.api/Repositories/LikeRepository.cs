@@ -35,4 +35,14 @@ public class LikeRepository : ILikeRepository
 	{
 		return await _context.Likes.CountAsync(l => l.PostId == postId);
 	}
+
+	public async Task<bool> HasUserLikedPostAsync(Guid postId, Guid userId)
+	{
+		var like = await _context.Likes.FirstOrDefaultAsync(l => l.PostId == postId && l.UserId == userId);
+		
+		if (like != null)
+			return true;
+		
+		return false;
+	}
 }

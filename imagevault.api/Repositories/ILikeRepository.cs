@@ -8,4 +8,5 @@ public interface ILikeRepository
 	Task RemoveLikeAsync(Like like);
 	Task <Like?> GetLikeByIdAsync(Guid postId, Guid userId);
 	Task<int?> GetLikesOnPostCountAsync (Guid postId);
+	Task<bool> HasUserLikedPostAsync(Guid postId, Guid userId);
 }
