@@ -4,7 +4,7 @@ namespace imagevault.api.Repositories;
 
 public interface ILikeRepository
 {
-	Task AddLike(Like like);
-	Task RemoveLike(Like like);
-	Task<int> GetLikesOnPost (Guid postId);
+	Task AddLikeAsync(Like like);
+	Task RemoveLikeAsync(Like like);
+	Task<int?> GetLikesOnPostAsync (Guid postId);
 }

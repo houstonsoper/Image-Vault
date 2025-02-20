@@ -14,18 +14,18 @@ public class LikeRepository : ILikeRepository
 		_context.SaveChanges();
 	}
 	
-	public async Task AddLike(Like like)
+	public async Task AddLikeAsync(Like like)
 	{
 		await _context.Likes.AddAsync(like);
 	}
 
-	public async Task RemoveLike(Like like)
+	public async Task RemoveLikeAsync(Like like)
 	{
 		_context.Likes.Remove(like);
 		await _context.SaveChangesAsync();
 	}
 
-	public async Task<int> GetLikesOnPost(Guid postId)
+	public async Task<int?> GetLikesOnPostAsync(Guid postId)
 	{
 		return await _context.Likes.CountAsync(l => l.PostId == postId);
 	}
