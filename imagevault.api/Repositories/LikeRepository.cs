@@ -17,6 +17,7 @@ public class LikeRepository : ILikeRepository
 	public async Task AddLikeAsync(Like like)
 	{
 		await _context.Likes.AddAsync(like);
+		await _context.SaveChangesAsync();
 	}
 
 	public async Task RemoveLikeAsync(Like like)
