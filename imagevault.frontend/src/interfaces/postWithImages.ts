@@ -4,7 +4,7 @@ export default interface PostWithImages {
   id: string,
   title: string,
   description: string,
-  date: Date,
+  date: string,
   isActive : boolean,
   userId : string,
   images : PostImage[],
