@@ -12,10 +12,12 @@ namespace imagevault.api.Controllers;
 public class LikesController : ControllerBase
 {
 	private readonly ILikeService _likeService;
+	private readonly ILikeRepository _likeRepository;
 
-	public LikesController(ILikeService likeService)
+	public LikesController(ILikeService likeService, ILikeRepository likeRepository)
 	{
 		_likeService = likeService;
+		_likeRepository = likeRepository;
 	}
 	
 	[HttpGet("{postId}/count")]
@@ -37,5 +39,12 @@ public class LikesController : ControllerBase
 	{
 		await _likeService.RemoveLikeAsync(postId, userId);
 		return Ok("Like removed");
+	}
+
+	[HttpGet("{postId}/{userId}")]
+	public async Task<IActionResult> HasUserLikedPost([FromRoute] Guid postId, [FromRoute] Guid userId)
+	{
+		var hasUserLikedPost = await _likeRepository.HasUserLikedPostAsync(postId, userId);
+		return Ok(hasUserLikedPost);
 	}
 }
