@@ -9,16 +9,16 @@ namespace imagevault.api.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class LikeController : ControllerBase
+public class LikesController : ControllerBase
 {
 	private readonly ILikeService _likeService;
 
-	public LikeController(ILikeService likeService)
+	public LikesController(ILikeService likeService)
 	{
 		_likeService = likeService;
 	}
 	
-	[HttpGet("{postId}")]
+	[HttpGet("{postId}/count")]
 	public async Task<IActionResult> GetLikesOnPostCount([FromRoute] Guid postId)
 	{
 		var likesCount = await _likeService.GetLikesOnPostCountAsync(postId);

@@ -5,12 +5,13 @@ namespace imagevault.api.Models;
 public class Like
 {
 	public Guid Id { get; set; }
-	[Required (ErrorMessage="Post ID is required")]
 	
+	[Required (ErrorMessage="Post ID is required")] 
 	public required Guid PostId { get; set; }
 	
 	[Required (ErrorMessage="User ID is required")]
 	public required Guid UserId { get; set; }
+	
 	public DateTime Date { get; set; } = DateTime.UtcNow;
 	
 	//Navigation
