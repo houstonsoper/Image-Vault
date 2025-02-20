@@ -1,6 +1,7 @@
 using imagevault.api.Middleware;
 using Microsoft.EntityFrameworkCore;
 using imagevault.api.Contexts;
+using imagevault.api.Models;
 using imagevault.api.Repositories;
 using imagevault.api.Services;
 
@@ -26,7 +27,9 @@ builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
-builder.Services.AddScoped<imagevault.api.Repositories.IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<ILikeRepository, LikeRepository>();
+builder.Services.AddScoped<ILikeService, LikeService>();
 
 // Enable CORS
 builder.Services.AddCors(options =>
