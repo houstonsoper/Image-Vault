@@ -1,6 +1,6 @@
 ﻿const BASE_URL = 'https://localhost:44367/Likes'
 
-export async function getLikesForPostCount(postId : number, signal? : AbortSignal) : Promise<number | null> {
+export async function getLikesForPostCount(postId : string, signal? : AbortSignal) : Promise<number | null> {
   try{
     const url = `${BASE_URL}/${postId}/count`;
     const response : Response = await fetch(url, {signal});
@@ -16,7 +16,7 @@ export async function getLikesForPostCount(postId : number, signal? : AbortSigna
   }
 }
 
-export async function addLike (postId : number, userId : string) : Promise<void> {
+export async function addLike (postId : string, userId : string) : Promise<void> {
   try{
     const url = `${BASE_URL}`;
     
@@ -36,7 +36,7 @@ export async function addLike (postId : number, userId : string) : Promise<void>
   }
 }
 
-export async function removeLike (postId : number, userId : string) : Promise<void> {
+export async function removeLike (postId : string, userId : string) : Promise<void> {
   try{
     const url = `${BASE_URL}/${postId}/${userId}`;
 
