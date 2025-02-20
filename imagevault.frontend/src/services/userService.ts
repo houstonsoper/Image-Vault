@@ -1,5 +1,6 @@
 ﻿import User from "@/interfaces/user";
 import UserFormDetails from "@/interfaces/userFormDetails";
+import {use} from "react";
 
 const BASEURL: string = "https://localhost:44367/User"
 
@@ -217,4 +218,18 @@ export async function userResetPassword(tokenId : string, formData : FormData ) 
     }
     
     return await response.json();
+}
+
+export async function getUserById (userId : string, signal? : AbortSignal){
+    try{
+        const url: string = `${BASEURL}/${userId}`;
+        const response : Response = await fetch(url, {signal})
+        
+        if (!response.ok) 
+            throw new Error(`Unable to get user with id ${userId}`);
+        
+        return await response.json();
+    } catch (e){
+        console.error(e);
+    }
 }
