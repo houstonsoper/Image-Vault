@@ -23,7 +23,6 @@ export default function Home() {
       setPosts(fetchedPosts);
     }
     getPosts();
-   
     return () => controller.abort();
   }, [])
   

@@ -8,6 +8,7 @@ import PostWithImages from "@/interfaces/postWithImages";
 import Image from "next/image";
 import User from "@/interfaces/user";
 import {getUserById} from "@/services/userService";
+import {getLikesForPostCount} from "@/services/likeService";
 
 export default function PostPage() {
   const searchParams: Params = useParams();
@@ -15,8 +16,8 @@ export default function PostPage() {
   const [post, setPost] = useState<PostWithImages | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [user, setUser] = useState<User | null>(null);
-
-
+  const [likesCount, setLikesCount] = useState<number>(0);
+  
   //Get post on mount
   useEffect(() => {
     const controller = new AbortController();
@@ -25,9 +26,11 @@ export default function PostPage() {
       if (postId) {
         const fetchedPost: PostWithImages | null = await fetchPostById(postId, signal);
         setPost(fetchedPost);
-
+        
         if (fetchedPost) {
-          const fetchedUser: User | null = await getUserById(fetchedPost.userId);
+          const fetchedUser: User | null = await getUserById(fetchedPost.userId, signal);
+          const fetchedLikesCount : number | null = await getLikesForPostCount(fetchedPost.id, signal);
+          setLikesCount(fetchedLikesCount ?? 0);
           setUser(fetchedUser);
         }
       }
@@ -92,12 +95,10 @@ export default function PostPage() {
               </div>
             )}
             </div>
-            <div className="flex space-x-2">
+            <div className="flex space-x-3">
               <button className="text-gray-400 hover:text-red-500 transition-colors duration-200">
                 <span className="material-symbols-outlined symbol-hover text-2xl">favorite</span>
-              </button>
-              <button className="text-gray-400 hover:text-blue-500 transition-colors duration-200">
-                <span className="material-symbols-outlined symbol-hover text-2xl ">chat_bubble</span>
+                <span>{likesCount}</span>
               </button>
             </div>
             <div>
