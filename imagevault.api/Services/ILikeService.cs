@@ -5,6 +5,6 @@ namespace imagevault.api.Services;
 public interface ILikeService
 {
 	Task AddLikeAsync(Like like);
-	Task RemoveLikeAsync(Like like);
-	Task<int> GetLikesOnPostAsync (Guid postId);
+	Task RemoveLikeAsync(Guid postId, Guid userId);
+	Task<int> GetLikesOnPostCountAsync (Guid postId);
 }

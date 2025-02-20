@@ -25,7 +25,12 @@ public class LikeRepository : ILikeRepository
 		await _context.SaveChangesAsync();
 	}
 
-	public async Task<int?> GetLikesOnPostAsync(Guid postId)
+	public async Task<Like?> GetLikeByIdAsync(Guid postId, Guid userId)
+	{
+		return await _context.Likes.FirstOrDefaultAsync(l => l.PostId == postId && l.UserId == userId);
+	}
+
+	public async Task<int?> GetLikesOnPostCountAsync(Guid postId)
 	{
 		return await _context.Likes.CountAsync(l => l.PostId == postId);
 	}

@@ -27,22 +27,19 @@ public class LikeService : ILikeService
 		await _likeRepository.AddLikeAsync(like);
 	}
 
-	public async Task RemoveLikeAsync(Like like)
+	public async Task RemoveLikeAsync(Guid postId, Guid userId)
 	{
-		var post = await _postService.GetPostByIdAsync(like.PostId)
-		           ?? throw new InvalidOperationException("Post not found");
+		var like = await _likeRepository.GetLikeByIdAsync(postId, userId)
+			?? throw new InvalidOperationException("Like not found");
 		
-		var user = await _userService.GetUserByIdAsync(like.UserId)
-		           ?? throw new InvalidOperationException("User not found");
-
 		await _likeRepository.RemoveLikeAsync(like);
 	}
 
-	public async Task<int> GetLikesOnPostAsync(Guid postId)
+	public async Task<int> GetLikesOnPostCountAsync(Guid postId)
 	{
 		var post = await _postService.GetPostByIdAsync(postId);
 		
-		return await _likeRepository.GetLikesOnPostAsync(post.Id)
+		return await _likeRepository.GetLikesOnPostCountAsync(post.Id)
 			?? throw new InvalidOperationException("Post not found");
 	}
 }
