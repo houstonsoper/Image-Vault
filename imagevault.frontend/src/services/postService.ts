@@ -61,9 +61,23 @@ export async function fetchPosts ({limit = 0, offset = 0, search = ""} : FetchPo
       throw new Error("Failed to fetch posts");
     
     return await response.json();
-    
   } catch (e){
     console.error(e);
     return [];
+  }
+}
+
+export async function fetchPostById (postId : string, signal? : AbortSignal) : Promise<PostWithImages | null> {
+  try {
+    const url: string = `${DEFAULT_URL}/${postId}`;
+    const response: Response = await fetch(url, {signal});
+    
+    if (!response.ok) {
+      throw new Error("Failed to fetch post");
+    }
+    return await response.json();
+  } catch (e){
+    console.error(e);
+    return null;
   }
 }
