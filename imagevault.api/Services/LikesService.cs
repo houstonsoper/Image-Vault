@@ -3,15 +3,15 @@ using imagevault.api.Repositories;
 
 namespace imagevault.api.Services;
 
-public class LikeService : ILikeService
+public class LikesService : ILikesService
 {
-	private readonly ILikeRepository _likeRepository;
+	private readonly ILikesRepository _likesRepository;
 	private readonly IPostService _postService;
 	private readonly IUserService _userService;
 
-	public LikeService(ILikeRepository likeRepository, IPostService postService, IUserService userService)
+	public LikesService(ILikesRepository likesRepository, IPostService postService, IUserService userService)
 	{
-		_likeRepository = likeRepository;
+		_likesRepository = likesRepository;
 		_postService = postService;
 		_userService = userService;
 	}
@@ -24,22 +24,22 @@ public class LikeService : ILikeService
 		var user = await _userService.GetUserByIdAsync(like.UserId)
 			?? throw new NullReferenceException("User not found");
 
-		await _likeRepository.AddLikeAsync(like);
+		await _likesRepository.AddLikeAsync(like);
 	}
 
 	public async Task RemoveLikeAsync(Guid postId, Guid userId)
 	{
-		var like = await _likeRepository.GetLikeByIdAsync(postId, userId)
+		var like = await _likesRepository.GetLikeByIdAsync(postId, userId)
 			?? throw new InvalidOperationException("Like not found");
 		
-		await _likeRepository.RemoveLikeAsync(like);
+		await _likesRepository.RemoveLikeAsync(like);
 	}
 
 	public async Task<int> GetLikesOnPostCountAsync(Guid postId)
 	{
 		var post = await _postService.GetPostByIdAsync(postId);
 		
-		return await _likeRepository.GetLikesOnPostCountAsync(post.Id)
+		return await _likesRepository.GetLikesOnPostCountAsync(post.Id)
 			?? throw new InvalidOperationException("Post not found");
 	}
 }

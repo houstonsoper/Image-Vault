@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace imagevault.api.Repositories;
 
-public class LikeRepository : ILikeRepository
+public class LikesRepository : ILikesRepository
 {
 	private readonly ImageVaultDbContext _context;
 
-	public LikeRepository(ImageVaultDbContext context)
+	public LikesRepository(ImageVaultDbContext context)
 	{
 		_context = context;
 		_context.SaveChanges();
