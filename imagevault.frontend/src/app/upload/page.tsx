@@ -11,7 +11,7 @@ import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-
 export default function UploadPage() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const filesRef : RefObject<FileList | null> = useRef<FileList>(null);
-  const {user} = useUser();
+  const {auth} = useUser();
   const router : AppRouterInstance = useRouter();
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,7 +23,7 @@ export default function UploadPage() {
     const description : string | undefined= formData.get("description")?.toString();
     
     //Validate form data
-    if (!user) {
+    if (!auth.user) {
       throw new Error("You must be logged in to create a post");
     }
     if (!filesRef.current) {
@@ -35,7 +35,7 @@ export default function UploadPage() {
     
     //Post form data
     try {
-      const post: Post | null = await createPost(title, description, user.userId)
+      const post: Post | null = await createPost(title, description, auth.user.userId)
       if (post) {
         await uploadImages(post.id, filesRef.current);
         router.push(`/post/${post.id}`);

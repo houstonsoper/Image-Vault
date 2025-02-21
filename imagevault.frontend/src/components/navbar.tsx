@@ -4,7 +4,7 @@ import Link from "next/link";
 import {useUser} from "@/contexts/userContext";
 
 export default function Navbar() {
-  const {user} = useUser();
+  const {auth} = useUser();
 
   return (
     <nav className="bg-gray-900">
@@ -30,7 +30,7 @@ export default function Navbar() {
             </div>
           </div>
           <div>
-            {user ? (
+            {auth.user ? (
               <span className="material-symbols-outlined text-white">account_circle</span>
             ) : (<Link className="text-white" href="/login">Login</Link>)}
           </div>

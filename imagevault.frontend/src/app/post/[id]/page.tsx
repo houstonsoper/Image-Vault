@@ -8,7 +8,8 @@ import PostWithImages from "@/interfaces/postWithImages";
 import Image from "next/image";
 import User from "@/interfaces/user";
 import {getUserById} from "@/services/userService";
-import {getLikesForPostCount} from "@/services/likeService";
+import {getLikesForPostCount, hasUserLikedPost} from "@/services/likeService";
+import {useUser} from "@/contexts/userContext";
 
 export default function PostPage() {
   const searchParams: Params = useParams();
@@ -17,9 +18,13 @@ export default function PostPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [user, setUser] = useState<User | null>(null);
   const [likesCount, setLikesCount] = useState<number>(0);
+  const [hasUserLiked, setHasUserLiked] = useState<boolean>(false);
+  const {auth} = useUser();
+  const [loading, setLoading] = useState(true);
   
   //Get post on mount
   useEffect(() => {
+    setLoading(true);
     const controller = new AbortController();
     const signal: AbortSignal = controller.signal;
     const getPostDetails = async (): Promise<void> => {
@@ -30,14 +35,17 @@ export default function PostPage() {
         if (fetchedPost) {
           const fetchedUser: User | null = await getUserById(fetchedPost.userId, signal);
           const fetchedLikesCount : number | null = await getLikesForPostCount(fetchedPost.id, signal);
+          const fetchedHasUserLikedPost : boolean = await hasUserLikedPost(fetchedPost.id, auth.user?.userId, signal);
           setLikesCount(fetchedLikesCount ?? 0);
           setUser(fetchedUser);
+          setHasUserLiked(fetchedHasUserLikedPost);
         }
       }
     }
     getPostDetails();
+    setLoading(false);
     return () => controller.abort();
-  }, []);
+  }, [auth.user]);
 
   const handleImageChange = (direction : string) => {
     if (direction === "next" && post) {
@@ -50,7 +58,7 @@ export default function PostPage() {
   
   return (
     <section className="container m-auto">
-      {post ? (
+      {!loading && post ? (
         <div className="flex text-white py-12">
           <div className="m-auto w-full max-w-[30rem]">
             <div>
@@ -97,7 +105,7 @@ export default function PostPage() {
             </div>
             <div className="flex space-x-3">
               <button className="text-gray-400 hover:text-red-500 transition-colors duration-200">
-                <span className="material-symbols-outlined symbol-hover text-2xl">favorite</span>
+                <span className={`material-symbols-outlined text-2xl symbol-hover ${hasUserLiked && ("symbol-fill text-red-600")}`}>favorite</span>
                 <span>{likesCount}</span>
               </button>
             </div>

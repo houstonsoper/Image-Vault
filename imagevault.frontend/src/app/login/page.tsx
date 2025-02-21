@@ -12,7 +12,7 @@ export default function LoginPage() {
     const [areDetailsInvalid, setAreDetailsInvalid] = useState<boolean>(false);
     const [errors, setErrors] = useState<Error[] | null>(null);
     const router  = useRouter();
-    const { user, setUser } = useUser();
+    const { auth } = useUser();
     
     
     const handleFormSubmit = async (e : React.FormEvent) => {
@@ -35,7 +35,7 @@ export default function LoginPage() {
                 const loggedInUser : User | null = await getUser();
                 
                 if(loggedInUser){
-                    setUser(loggedInUser);
+                    auth.setUser(loggedInUser);
                     router.push("/");
                 }
             } catch (error){
