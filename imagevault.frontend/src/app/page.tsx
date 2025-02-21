@@ -5,6 +5,7 @@ import type PostWithImages from "@/interfaces/postWithImages"
 import { fetchPosts } from "@/services/postService"
 import PostCard from "@/components/postCard"
 import {useInView} from "react-intersection-observer";
+import {useUser} from "@/contexts/userContext";
 
 export default function Home() {
   const [posts, setPosts] = useState<PostWithImages[]>([]);
@@ -12,6 +13,7 @@ export default function Home() {
   const [scrollTrigger, isInView] = useInView();
   const limit = 18;
   const [page, setPage] = useState<number>(1);
+  const {auth} = useUser();
 
   //Get posts on mount
   useEffect(() => {
@@ -53,7 +55,7 @@ export default function Home() {
       <div className="container mx-auto px-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-12">
           {posts.map((post) => (
-            <PostCard post={post} key={post.id}/>
+            <PostCard post={post} user={auth?.user} key={post.id}/>
           ))}
         </div>
         <div>

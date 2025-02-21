@@ -8,7 +8,7 @@ import PostWithImages from "@/interfaces/postWithImages";
 import Image from "next/image";
 import User from "@/interfaces/user";
 import {getUserById} from "@/services/userService";
-import {getLikesForPostCount, hasUserLikedPost} from "@/services/likeService";
+import {addLike, getLikesForPostCount, hasUserLikedPost, removeLike} from "@/services/likesService";
 import {useUser} from "@/contexts/userContext";
 
 export default function PostPage() {
@@ -21,6 +21,7 @@ export default function PostPage() {
   const [hasUserLiked, setHasUserLiked] = useState<boolean>(false);
   const {auth} = useUser();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   
   //Get post on mount
   useEffect(() => {
@@ -30,12 +31,11 @@ export default function PostPage() {
     const getPostDetails = async (): Promise<void> => {
       if (postId) {
         const fetchedPost: PostWithImages | null = await fetchPostById(postId, signal);
-        setPost(fetchedPost);
-        
         if (fetchedPost) {
           const fetchedUser: User | null = await getUserById(fetchedPost.userId, signal);
           const fetchedLikesCount : number | null = await getLikesForPostCount(fetchedPost.id, signal);
           const fetchedHasUserLikedPost : boolean = await hasUserLikedPost(fetchedPost.id, auth.user?.userId, signal);
+          setPost(fetchedPost);
           setLikesCount(fetchedLikesCount ?? 0);
           setUser(fetchedUser);
           setHasUserLiked(fetchedHasUserLikedPost);
@@ -45,7 +45,7 @@ export default function PostPage() {
     getPostDetails();
     setLoading(false);
     return () => controller.abort();
-  }, [auth.user]);
+  }, [auth.user, hasUserLiked]);
 
   const handleImageChange = (direction : string) => {
     if (direction === "next" && post) {
@@ -54,7 +54,22 @@ export default function PostPage() {
     if (direction === "prev" && post) {
       setSelectedImageIndex(prevIndex => (prevIndex - 1 + post.images.length) % post.images.length);
     }
-  }
+  };
+  
+  const handleLike = async () : Promise<void> => {
+    if (!auth.user){
+      return setError({name: "AuthRequired", message: "You must be logged in to like this post"});
+    }
+    if (post) {
+      if (hasUserLiked) {
+        await removeLike(post.id, auth.user.userId);
+        setHasUserLiked(false);
+      } else if (!hasUserLiked) {
+        await addLike(post.id, auth.user.userId);
+        setHasUserLiked(true);
+      }
+    }
+  };
   
   return (
     <section className="container m-auto">
@@ -104,8 +119,13 @@ export default function PostPage() {
             )}
             </div>
             <div className="flex space-x-3">
-              <button className="text-gray-400 hover:text-red-500 transition-colors duration-200">
-                <span className={`material-symbols-outlined text-2xl symbol-hover ${hasUserLiked && ("symbol-fill text-red-600")}`}>favorite</span>
+              <button 
+                className="text-gray-400 hover:text-red-500 transition-colors duration-200"
+                onClick={handleLike}
+              >
+                <span className={`material-symbols-outlined text-2xl symbol-hover ${hasUserLiked && ("symbol-fill text-red-600")}`}>
+                  favorite
+                </span>
                 <span>{likesCount}</span>
               </button>
             </div>
@@ -121,5 +141,5 @@ export default function PostPage() {
         </div>
       ) : null}
     </section>
-  )
+  );
 }
