@@ -47,9 +47,11 @@ public class CommentService : ICommentService
 		await _commentRepository.SaveAsync();
 	}
 
-	public async Task<List<Comment>> GetCommentsAsync(int? limit, int? offset)
+	public async Task<List<Comment>> GetCommentsAsync(Guid postId, int? limit, int? offset)
 	{
 		var query = _commentRepository.GetAllQuery();
+		
+		query = query.Where(c => c.PostId == postId);
 
 		if (offset.HasValue && offset != 0)
 			query = query.Skip(offset.Value);
@@ -58,5 +60,20 @@ public class CommentService : ICommentService
 			query = query.Take(limit.Value);
 
 		return await query.ToListAsync();
+	}
+
+	public async Task<Comment> GetCommentByPostAndUserIdAsync(Guid postId, Guid userId)
+	{
+		var query = _commentRepository.GetAllQuery();
+		query = query.Where(c => c.PostId == postId && c.UserId == userId);
+		
+		return await query.FirstOrDefaultAsync()
+			?? throw new InvalidOperationException("No Comment Found");
+	}
+
+	public async Task<Comment> GetCommentById(Guid commentId)
+	{
+		return await _commentRepository.GetByIdAsync(commentId)
+			?? throw new InvalidOperationException("No Comment Found");
 	}
 }
