@@ -26,6 +26,7 @@ public class ImageVaultDbContext : DbContext
         modelBuilder.ApplyConfiguration(new UserGroupEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new PasswordResetTokenEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new LikeEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new CommentEntityTypeConfiguration());
     }
 
     public ImageVaultDbContext(DbContextOptions<ImageVaultDbContext> options) : base(options)
