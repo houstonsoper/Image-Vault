@@ -30,6 +30,8 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<ILikesRepository, LikesRepository>();
 builder.Services.AddScoped<ILikesService, LikesService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 // Enable CORS
 builder.Services.AddCors(options =>
