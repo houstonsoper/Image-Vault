@@ -12,14 +12,14 @@ public class CommentEntityTypeConfiguration : IEntityTypeConfiguration<Comment>
 
 		builder
 			.HasOne(c => c.Post)
-			.WithMany()
-			.HasForeignKey(c => c.PostId)
+			.WithOne()
+			.HasForeignKey<Comment>(c => c.PostId)
 			.OnDelete(DeleteBehavior.Restrict);
 		
 		builder
 			.HasOne(c => c.User)
-			.WithMany()
-			.HasForeignKey(c => c.UserId)
+			.WithOne()
+			.HasForeignKey<Comment>(c => c.UserId)
 			.OnDelete(DeleteBehavior.Restrict);
 	}
 }

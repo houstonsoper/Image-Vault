@@ -10,14 +10,14 @@ public class LikeEntityTypeConfiguration : IEntityTypeConfiguration<Like>
 	{
 		builder
 			.HasOne(l => l.Post)
-			.WithMany()
-			.HasForeignKey(l => l.PostId)
+			.WithOne()
+			.HasForeignKey<Like>(l => l.PostId)
 			.OnDelete(DeleteBehavior.NoAction);
 
 		builder
 			.HasOne(l => l.User)
-			.WithMany()
-			.HasForeignKey(l => l.UserId)
+			.WithOne()
+			.HasForeignKey<Like>(l => l.UserId)
 			.OnDelete(DeleteBehavior.NoAction);
 	}
 }
