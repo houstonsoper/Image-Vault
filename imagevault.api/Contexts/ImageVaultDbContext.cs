@@ -11,8 +11,8 @@ public class ImageVaultDbContext : DbContext
     public DbSet<UserGroup> UserGroups { get; set; }
     public DbSet<Image> Images { get; set; }
     public DbSet<Post> Posts { get; set; }
-    
     public DbSet<Like> Likes { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
